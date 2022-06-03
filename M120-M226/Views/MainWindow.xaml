@@ -3,9 +3,23 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodels="clr-namespace:M120_M226.ViewModels"
+        xmlns:views="clr-namespace:M120_M226.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1000">
     <Window.Resources>
+        <DataTemplate x:Name="GuesListTemplate" DataType="{x:Type viewmodels:GuestListViewModel}">
+            <views:GuestListView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="GuestCreateTemplate" DataType="{x:Type viewmodels:GuestCreateViewModel}">
+            <views:GuestCreateView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="RoomListTemplate" DataType="{x:Type viewmodels:RoomListViewModel}">
+            <views:RoomListView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="RoomCreateTemplate" DataType="{x:Type viewmodels:RoomCreateViewModel}">
+            <views:RoomCreateView DataContext="{Binding}"/>
+        </DataTemplate>
         <Style TargetType="DataGrid">
             <Setter Property="AutoGenerateColumns" Value="False"/>
             <Setter Property="CanUserAddRows" Value="False"/>
@@ -13,204 +27,18 @@
         </Style>
     </Window.Resources>
 
-    <TabControl>
-        
-        <TabItem x:Name="GuestTab" Header="Gäste Liste">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="45px"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0" HorizontalAlignment="Left">
+            <Button Margin="5" Padding="10,0,10,0" Content="Gäste Liste" Click="GuestListView_Clicked"/>
+            <Button Margin="5" Padding="10,0,10,0" Content="Gäste Erstellen" Click="GuestCreateView_Clicked"/>
+            <Button Margin="5" Padding="10,0,10,0" Content="Zimmer Liste" Click="RoomListView_Clicked"/>
+            <Button Margin="5" Padding="10,0,10,0" Content="Zimmer Erstellen" Click="RoomCreateView_Clicked"/>
+        </DockPanel>
 
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-
-                    <Label Grid.Row="0" Grid.Column="0"> Vorname</Label>
-                    <Label Grid.Row="1" Grid.Column="0">Nachname</Label>
-                    <Label Grid.Row="2" Grid.Column="0">Geburtsdatum</Label>
-                    <Label Grid.Row="3" Grid.Column="0">Konto</Label>
-                    <Label Grid.Row="4" Grid.Column="0">Zimmmer Nummer</Label>
-                    <TextBox x:Name="FnTbFilter" Grid.Row="0" Grid.Column="1" Margin="3">
-                    </TextBox>
-                    <TextBox x:Name="LnTbFilter" Grid.Row="1" Grid.Column="1" Margin="3">
-                    </TextBox>
-                    <DatePicker x:Name="BdDpFilter" Grid.Row="2" Grid.Column="1" Margin="3">
-                    </DatePicker>
-                    <TextBox x:Name="AccTbFilter" Grid.Row="3" Grid.Column="1" Margin="3">
-                    </TextBox>
-                    <ComboBox x:Name="RnCbFilter" Grid.Row="4" Grid.Column="1" Margin="3">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock>
-                                    <TextBlock.Text>
-                                        <MultiBinding StringFormat="{}{0} - {1}">
-                                            <Binding Path="Number"/>
-                                            <Binding Path="Type"/>
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                    <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="4,5,4,5" Content="Reset filter">
-                    </Button>
-                </Grid>
-
-                <DataGrid Grid.Row="1" Grid.Column="0" x:Name="GuestGrid">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Vorname"/>
-                        <DataGridTextColumn Header="Nachname"/>
-                        <DataGridTextColumn Header="Geburtstag"/>
-                        <DataGridTextColumn Header="Konto"/>
-                        <DataGridTextColumn Header="Zimmer Nummer"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </Grid>
-        </TabItem>
-        <TabItem x:Name="GuessCreate" Header="Gäste Erstellen">
-            <Border Grid.Column="1" BorderThickness="1" Margin="50" CornerRadius="10" BorderBrush="LightBlue">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-
-                        <Label Grid.Row="0" Grid.Column="0">Vorname</Label>
-                        <Label Grid.Row="1" Grid.Column="0">Nachname</Label>
-                        <Label Grid.Row="2" Grid.Column="0">Geburtsdatum</Label>
-                        <Label Grid.Row="3" Grid.Column="0">Konto</Label>
-                    <Label Grid.Row="4" Grid.Column="0">Zimmmer Nummer</Label>
-                    <TextBox Grid.Row="0" Grid.Column="1" Margin="3"/>
-                        <TextBox Grid.Row="1" Grid.Column="1" Margin="3"/>
-                        <DatePicker Grid.Row="2" Grid.Column="1" Margin="3"/>
-                        <TextBox Grid.Row="3" Grid.Column="1" Margin="3"/>
-                        <ComboBox Grid.Row="4" Grid.Column="1" Margin="3">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock>
-                                        <TextBlock.Text>
-                                            <MultiBinding StringFormat="{}{0} - {1}">
-                                                <Binding Path="Number"/>
-                                                <Binding Path="Type"/>
-                                            </MultiBinding>
-                                        </TextBlock.Text>
-                                    </TextBlock>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-
-                    <DockPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Width="{Binding RelativeSource={RelativeSource AncestorType=Grid, Mode=FindAncestor}, Path=ActualWidth}">
-                        <Button Margin="5" Padding="10,0,10,0" Content="Add"/>
-                        <Button Margin="5" Padding="10,0,10,0" Content="Update"/>
-                        <Button Margin="5" Padding="10,0,10,0" Content="Delete"/>
-                        <Button Margin="5" Padding="10,0,10,0" HorizontalAlignment="Right" Content="Export"/>
-                    </DockPanel>
-                </Grid>
-                </Border>
-        </TabItem>
-        <TabItem x:Name="RoomList" Header="Zimmer Liste">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Row="0" Grid.Column="0">Zimmer Nummer</Label>
-                    <Label Grid.Row="1" Grid.Column="0">Zimmer Beschreibung</Label>
-                    <Label Grid.Row="2" Grid.Column="0">Zimmer Art</Label>
-                    <TextBox Grid.Row="0" Grid.Column="1" Margin="3">
-                    </TextBox>
-                    <ComboBox Grid.Row="1" Grid.Column="1" Margin="3">
-                    </ComboBox>
-                    <ComboBox Grid.Row="2" Grid.Column="1" Margin="3">
-                        <ComboBox.Items>
-                            <TextBlock Text="Nicht Besetzt"/>
-                            <TextBlock Text="Besetzt"/>
-                        </ComboBox.Items>
-                    </ComboBox>
-                    <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="4,5,4,5" Content="Reset filter">
-                    </Button>
-                </Grid>
-                
-                <DataGrid Grid.Column="0" Grid.Row="1" x:Name="RoomsGrid">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Zimmer Nummer"/>
-                        <DataGridTextColumn Header="Zimmer Art"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </Grid>
-        </TabItem>
-        <TabItem x:Name="RoomCreate" Header="Zimmer Erstellen">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-
-                <Border Grid.Column="0" BorderThickness="1" Margin="50" CornerRadius="10" BorderBrush="LightBlue">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-
-                        <Label Grid.Row="0" Grid.Column="0">Zimmer Nummer</Label>
-                        <Label Grid.Row="1" Grid.Column="0">Zimmer Art</Label>
-                        <TextBox Grid.Row="0" Grid.Column="1" Margin="3"/>
-                        <ComboBox Grid.Row="1" Grid.Column="1" Margin="3"/>
-
-                        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button Margin="5" Padding="10,0,10,0" Content="Add"/>
-                            <Button Margin="5" Padding="10,0,10,0" Content="Update"/>
-                            <Button Margin="5" Padding="10,0,10,0" Content="Delete"/>
-                        </StackPanel>
-                    </Grid>
-                </Border>
-            </Grid> 
-        </TabItem>
-    </TabControl>
+        <ContentControl Grid.Row="1" Content="{Binding}"></ContentControl>
+    </Grid>
 </Window>
