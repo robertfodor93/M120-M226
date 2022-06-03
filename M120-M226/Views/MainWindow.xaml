@@ -73,11 +73,11 @@
 
                 <DataGrid Grid.Row="1" Grid.Column="0" x:Name="GuestGrid">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="First name"/>
-                        <DataGridTextColumn Header="Last name"/>
-                        <DataGridTextColumn Header="Birthdate"/>
-                        <DataGridTextColumn Header="Account"/>
-                        <DataGridTextColumn Header="Room number"/>
+                        <DataGridTextColumn Header="Vorname"/>
+                        <DataGridTextColumn Header="Nachname"/>
+                        <DataGridTextColumn Header="Geburtstag"/>
+                        <DataGridTextColumn Header="Konto"/>
+                        <DataGridTextColumn Header="Zimmer Nummer"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
@@ -172,8 +172,8 @@
                 
                 <DataGrid Grid.Column="0" Grid.Row="1" x:Name="RoomsGrid">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Room number"/>
-                        <DataGridTextColumn Header="Room type"/>
+                        <DataGridTextColumn Header="Zimmer Nummer"/>
+                        <DataGridTextColumn Header="Zimmer Art"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
