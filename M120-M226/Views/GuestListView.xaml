@@ -9,67 +9,40 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-
-            <Label Grid.Row="0" Grid.Column="0">Vorname</Label>
-            <Label Grid.Row="1" Grid.Column="0">Nachname</Label>
-            <Label Grid.Row="2" Grid.Column="0">Geburtsdatum</Label>
-            <Label Grid.Row="3" Grid.Column="0">Konto</Label>
-            <Label Grid.Row="4" Grid.Column="0">Zimmmer Nummer</Label>
-            <TextBox x:Name="FnTbFilter" Grid.Row="0" Grid.Column="1" Margin="3">
-            </TextBox>
-            <TextBox x:Name="LnTbFilter" Grid.Row="1" Grid.Column="1" Margin="3">
-            </TextBox>
-            <DatePicker x:Name="BdDpFilter" Grid.Row="2" Grid.Column="1" Margin="3">
-            </DatePicker>
-            <TextBox x:Name="AccTbFilter" Grid.Row="3" Grid.Column="1" Margin="3">
-            </TextBox>
-            <ComboBox x:Name="RnCbFilter" Grid.Row="4" Grid.Column="1" Margin="3">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock>
-                            <TextBlock.Text>
-                                <MultiBinding StringFormat="{}{0} - {1}">
-                                    <Binding Path="Number"/>
-                                    <Binding Path="Type"/>
-                                </MultiBinding>
-                            </TextBlock.Text>
-                        </TextBlock>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-            <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="4,5,4,5" Content="Reset filter">
-            </Button>
-        </Grid>
-
-        <DataGrid Grid.Row="1" Grid.Column="0" x:Name="GuestGrid">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Vorname"/>
-                <DataGridTextColumn Header="Nachname"/>
-                <DataGridTextColumn Header="Geburtstag"/>
-                <DataGridTextColumn Header="Konto"/>
-                <DataGridTextColumn Header="Zimmer Nummer"/>
-            </DataGrid.Columns>
-        </DataGrid>
-
+        <ListView Grid.Row="0" Margin="0 25 0 0" ItemsSource="{Binding Guests}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Vorname">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Firstname, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Nachname">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Lastname, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Geburtsdatum">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding BirthDate, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Konto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Account, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </UserControl>

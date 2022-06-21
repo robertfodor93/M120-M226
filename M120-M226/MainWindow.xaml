@@ -4,22 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewmodels="clr-namespace:M120_M226.ViewModels"
-        xmlns:views="clr-namespace:M120_M226.Views"
+        xmlns:views="clr-namespace:M120_M226.Views" d:DataContext="{d:DesignInstance Type=viewmodels:GuestCreateViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1000">
     <Window.Resources>
-        <DataTemplate x:Name="GuesListTemplate" DataType="{x:Type viewmodels:GuestListViewModel}">
-            <views:GuestListView DataContext="{Binding}"/>
-        </DataTemplate>
-        <DataTemplate x:Name="GuestCreateTemplate" DataType="{x:Type viewmodels:GuestCreateViewModel}">
-            <views:GuestCreateView DataContext="{Binding}"/>
-        </DataTemplate>
-        <DataTemplate x:Name="RoomListTemplate" DataType="{x:Type viewmodels:RoomListViewModel}">
-            <views:RoomListView DataContext="{Binding}"/>
-        </DataTemplate>
-        <DataTemplate x:Name="RoomCreateTemplate" DataType="{x:Type viewmodels:RoomCreateViewModel}">
-            <views:RoomCreateView DataContext="{Binding}"/>
-        </DataTemplate>
         <Style TargetType="DataGrid">
             <Setter Property="AutoGenerateColumns" Value="False"/>
             <Setter Property="CanUserAddRows" Value="False"/>
@@ -27,18 +15,26 @@
         </Style>
     </Window.Resources>
 
-    <Grid>
+    <Grid Margin="20 10" MaxWidth="600">
+        <Grid.Resources>
+            <DataTemplate DataType="{x:Type viewmodels:GuestCreateViewModel}">
+                <views:GuestCreateView DataContext="{Binding}"></views:GuestCreateView>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:GuestListViewModel}">
+                <views:GuestListView DataContext="{Binding}"></views:GuestListView>
+            </DataTemplate>
+        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="45px"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="0" HorizontalAlignment="Left">
-            <Button Margin="5" Padding="10,0,10,0" Content="Gäste Liste" Click="GuestListView_Clicked"/>
-            <Button Margin="5" Padding="10,0,10,0" Content="Gäste Erstellen" Click="GuestCreateView_Clicked"/>
-            <Button Margin="5" Padding="10,0,10,0" Content="Zimmer Liste" Click="RoomListView_Clicked"/>
-            <Button Margin="5" Padding="10,0,10,0" Content="Zimmer Erstellen" Click="RoomCreateView_Clicked"/>
+            <Button Margin="5" Padding="10,0,10,0" Content="Gäste Liste" d:DataContext="{d:DesignInstance d:Type=viewmodels:GuestListViewModel}"/>
+            <Button Margin="5" Padding="10,0,10,0" Content="Gäste Erstellen"/>
+            <Button Margin="5" Padding="10,0,10,0" Content="Zimmer Liste"/>
+            <Button Margin="5" Padding="10,0,10,0" Content="Zimmer Erstellen"/>
         </DockPanel>
-
-        <ContentControl Grid.Row="1" Content="{Binding}"></ContentControl>
+        <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}">
+        </ContentControl>
     </Grid>
 </Window>

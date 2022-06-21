@@ -25,25 +25,5 @@ namespace M120_M226
         {
             InitializeComponent();
         }
-
-        private void GuestListView_Clicked(object sender, RoutedEventArgs e)
-        {
-            DataContext = new GuestListViewModel();
-        }
-
-        private void GuestCreateView_Clicked(object sender, RoutedEventArgs e)
-        {
-            DataContext = new GuestCreateViewModel();
-        }
-
-        private void RoomListView_Clicked(object sender, RoutedEventArgs e)
-        {
-            DataContext = new RoomListViewModel();
-        }
-
-        private void RoomCreateView_Clicked(object sender, RoutedEventArgs e)
-        {
-            DataContext = new RoomCreateViewModel();
-        }
     }
 }
