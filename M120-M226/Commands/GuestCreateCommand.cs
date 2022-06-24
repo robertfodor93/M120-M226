@@ -17,6 +17,7 @@ namespace M120_M226.Commands
         public GuestCreateCommand(GuestCreateViewModel guestCreateViewModel, HotelModel hotel, NavigationService guestListVeiwNavigationService)
         {
             _guestListVeiwNavigationService = guestListVeiwNavigationService;
+            _guestCreateViewModel = guestCreateViewModel;
             _hotel = hotel;
         }
         public override void Execute(object parameter)

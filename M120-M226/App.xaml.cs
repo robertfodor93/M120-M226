@@ -26,7 +26,7 @@ namespace M120_M226
         }
         protected override void OnStartup(StartupEventArgs e)
         {
-            _navigationStore.CurrentViewModel = CreateGuestCreateViewModel();
+            _navigationStore.CurrentViewModel = CreateGuestListViewModel();
             MainWindow = new MainWindow()
             {
                 DataContext = new MainViewModel(_navigationStore)
